@@ -1,5 +1,8 @@
 resource "google_compute_instance" "default" {
-  name = "mymachine12345"
+  // Example with usage of lists, count, and length
+  count = "${length(var.name_count)}"
+
+  name = "list-${count.index+1}"
   // Example with usage of variables
   machine_type = var.machine_type
   zone = "us-central1-a"
@@ -20,8 +23,8 @@ resource "google_compute_instance" "default" {
   }
 }
 // Example of outputs
-output "machine_type" { value = "${google_compute_instance.default.machine_type}" }
-output "name" { value = "${google_compute_instance.default.name}" }
-output "zone" { value = "${google_compute_instance.default.zone}" }
-output "boot_disk" { value = "${google_compute_instance.default.boot_disk[0].initialize_params[0].image}" }
-output "network_interface" { value = "${google_compute_instance.default.network_interface[0].network}" }
+output "machine_type" { value = "${google_compute_instance.default.*.machine_type}" }
+output "name" { value = "${google_compute_instance.default.*.name}" }
+output "zone" { value = "${google_compute_instance.default.*.zone}" }
+# output "boot_disk" { value = "${google_compute_instance.default.boot_disk[0].initialize_params[0].image}" }
+# output "network_interface" { value = "${google_compute_instance.default.network_interface[0].network}" }
