@@ -3,8 +3,8 @@ resource "google_compute_instance" "default" {
   count = "${length(var.name_count)}"
 
   name = "list-${count.index+1}"
-  // Example with usage of variables
-  machine_type = var.machine_type
+  // Example with usage of map
+  machine_type = "${var.machine_type["dev"]}"
   zone = "us-central1-a"
 
   boot_disk {
